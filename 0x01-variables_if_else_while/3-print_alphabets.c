@@ -5,7 +5,6 @@
  *
  * Return: Always 0 (Success)
  */
-
 int main(void)
 {
 	char ch = 'a';
@@ -27,3 +26,4 @@ int main(void)
 	}
 	putchar('\n');
 	return (0);
+}	
