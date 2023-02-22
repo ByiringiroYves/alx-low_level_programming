@@ -5,21 +5,19 @@
  * 5 below 1024 (excluded), followed by a new line
  * Return: 0
  */
-int main(void)
-{
-	int i = 0;
-	unsigned long int a = 0, b = 1, next = 0;
+int main(void) {
+int first = 1, second = 2, next;
+    printf("%d, %d, ", first, second);
 
-	while (i < 98)
-	{
-		next = a + b;
-		a = b;
-		b = next;
-		printf("%lu", next);
-		if (i < 97)
-			printf(", ");
-		i++;
-	}
-	putchar('\n');
-	return (0);
+    for (int i = 3; i <= 98; i++) {
+        next = first + second;
+        printf("%d", next);
+        if (i != 98) {
+            printf(", ");
+        }
+        first = second;
+        second = next;
+    }
+    printf("\n");
+    return 0;
 }
