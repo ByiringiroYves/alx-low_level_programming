@@ -5,21 +5,19 @@
  * 5 below 1024 (excluded), followed by a new line
  * Return: 0
  */
-int main() {
-    int first = 1, second = 2, next;
-    int i;
-    printf("%d, %d, ", first, second);
+int main(void) {
+    int a = 1, b = 2, i;
 
-    for (i = 3; i <= 98; i++) {
-        next = first + second;
-        printf("%d", next);
-        if (i != 98) {
-            printf(", ");
-        }
-        first = second;
-        second = next;
+    printf("%d, %d", a, b);
+
+    for (i = 2; i < 98; i++) {
+        int c = a + b;
+        printf(", %d", c);
+        a = b;
+        b = c;
     }
+
     printf("\n");
+
     return 0;
 }
-
