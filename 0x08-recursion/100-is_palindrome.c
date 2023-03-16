@@ -10,7 +10,12 @@
  */
 int is_palindrome(char *s)
 {
-    int len = strlen(s);
+    int len;
+
+    if (!s)
+        return (0);
+
+    len = strlen(s);
 
     if (len <= 1)
         return (1);
@@ -21,5 +26,3 @@ int is_palindrome(char *s)
         return (is_palindrome(s + 1));
     }
 }
-
-
