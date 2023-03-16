@@ -1,76 +1,132 @@
-#include "main.h"
+#include <stdio.h>
 #include <stdlib.h>
-/**
- * _puts - prints a string, followed by a new line,
- * @str: pointer to the string to print
- * Return: void
- */
-void _puts(char *str)
-{
-	int i = 0;
+#include <ctype.h>
 
-	while (str[i])
-	{
-		_putchar(str[i]);
-		i++;
-	}
-}
 /**
- * _atoi - convert a string to an integer.
- * @s: char type string
- * Return: integer converted
+ * _isdigit - Checks if a character is a digit.
+ * @c: The character to check.
+ *
+ * Return: 1 if c is a digit, 0 otherwise.
  */
-int _atoi(const char *s)
+int _isdigit(char c)
 {
-	int sign = 1;
-	unsigned long int resp = 0, firstNum, i;
+    return isdigit(c) ? 1 : 0;
+}
 
-	for (firstNum = 0; !(s[firstNum] >= 48 && s[firstNum] <= 57); firstNum++)
-	{
-		if (s[firstNum] == '-')
-		{
-			sign *= -1;
-		}
-	}
-	for (i = firstNum; s[i] >= 48 && s[i] <= 57; i++)
-	{
-		resp *= 10;
-		resp += (s[i] - 48);
-	}
-	return (sign * resp);
-}
 /**
- * print_int - prints an integer.
- * @n: int
- * Return: 0
+ * _strlen - Calculates the length of a string.
+ * @s: The string to calculate the length of.
+ *
+ * Return: The length of s.
  */
-void print_int(unsigned long int n)
+int _strlen(char *s)
 {
-	unsigned  long int divisor = 1, i, resp;
+    int len = 0;
 
-	for (i = 0; n / divisor > 9; i++, divisor *= 10)
-		;
-	for (; divisor >= 1; n %= divisor, divisor /= 10)
-	{
-		resp = n / divisor;
-		_putchar('0' + resp);
-	}
+    while (*s++)
+        len++;
+
+    return len;
 }
+
 /**
- * main - print the result of the multiplication, followed by a new line
- * @argc: int
- * @argv: list
- * Return: 0
+ * _puts - Prints a string to stdout.
+ * @s: The string to print.
  */
-int main(int argc, char const *argv[])
+void _puts(char *s)
 {
-	(void)argc;
-	if (argc != 3)
-	{
-		_puts("Error ");
-		exit(98);
-	}
-	print_int(_atoi(argv[1]) * _atoi(argv[2]));
-	_putchar('\n');
-	return (0);
+    while (*s)
+        putchar(*s++);
+}
+
+/**
+ * _atoi - Converts a string to an integer.
+ * @s: The string to convert.
+ *
+ * Return: The integer value of the string.
+ */
+int _atoi(char *s)
+{
+    int sign = 1, num = 0;
+
+    while (*s)
+    {
+        if (*s == '-')
+            sign *= -1;
+
+        if (_isdigit(*s))
+            num = num * 10 + (*s - '0');
+
+        s++;
+    }
+
+    return sign * num;
+}
+
+/**
+ * print_error - Prints an error message to stderr and exits with a status of 98.
+ */
+void print_error(void)
+{
+    _puts("Error\n");
+    exit(98);
+}
+
+/**
+ * main - Entry point for the program.
+ * @argc: The number of arguments.
+ * @argv: An array of strings containing the arguments.
+ *
+ * Return: 0 if successful, 98 if an error occurs.
+ */
+int main(int argc, char **argv)
+{
+    int i, len1, len2, carry, product;
+    char *num1, *num2, *result;
+
+    if (argc != 3)
+        print_error();
+
+    num1 = argv[1];
+    num2 = argv[2];
+    len1 = _strlen(num1);
+    len2 = _strlen(num2);
+
+    for (i = 0; i < len1; i++)
+        if (!_isdigit(num1[i]))
+            print_error();
+
+    for (i = 0; i < len2; i++)
+        if (!_isdigit(num2[i]))
+            print_error();
+
+    result = calloc(len1 + len2 + 1, sizeof(char));
+    if (!result)
+        return 1;
+
+    for (i = len1 - 1; i >= 0; i--)
+    {
+        carry = 0;
+
+        for (int j = len2 - 1; j >= 0; j--)
+        {
+            product = (num1[i] - '0') * (num2[j] - '0') + carry + result[i + j + 1];
+            carry = product / 10;
+            result[i + j + 1] = product % 10;
+        }
+
+        result[i] += carry;
+    }
+
+    for (i = 0; result[i] == 0 && i < len1 + len2 - 1; i++)
+        ;
+
+    for (; i < len1 + len2; i++)
+        putchar(result[i] + '0');
+
+    putchar('\n');
+
+    free(result);
+
+    return 0;
 }
