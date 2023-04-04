@@ -10,7 +10,9 @@ size_t listint_len(const listint_t *h)
 {
 	size_t node_count = 0;
 
-	// Loop through the linked list and count the number of nodes.
+	/**
+	*Loop through the linked list and count the number of nodes.
+	*/
 	while (h != NULL)
 	{
 		h = h->next;
