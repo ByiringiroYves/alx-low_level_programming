@@ -1,28 +1,13 @@
 #include "main.h"
 
 /**
- * print_binary - Prints the binary representation of a number.
- * @n: The number to be printed in binary.
+ * print_binary - prints the binary representation of a number
+ * @n: the number to print in binary
  */
 void print_binary(unsigned long int n)
 {
-	unsigned long int divisor = 1, check;
-	int flag = 0;
-
-	while (divisor > 0)
-	{
-		check = n & divisor;
-		if (check == divisor)
-		{
-			_putchar('1');
-			flag = 1;
-		}
-		else if (flag)
-			_putchar('0');
-
-		divisor >>= 1;
-	}
-	if (!flag)
-		_putchar('0');
+    if (n > 1)
+        print_binary(n >> 1);
+    _putchar((n & 1) + '0');
 }
 
