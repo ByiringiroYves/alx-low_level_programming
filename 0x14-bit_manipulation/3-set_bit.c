@@ -7,7 +7,6 @@
  *
  * Return: 1 if successful, or -1 if an error occurred.
  * If the given index is greater than the maximum bit index of the input
- * unsigned long integer, the function returns -1 and does not modify the value.
  */
 int set_bit(unsigned long int *n, unsigned int index)
 {
