@@ -1,22 +1,22 @@
 #include "main.h"
 
 /**
- * print_binary - prints the binary representation of a number
+ * print_binary - prints the binary representation
+ * of an unsigned long integer.
+ * @n: the number to be converted.
  *
- * @n: the number to be printed in binary
- *
- * Return: void
+ * This function recursively prints the binary representation of an unsigned
+ * long integer, starting from the most significant bit down to the least
+ * significant bit. The binary digits are printed in the correct order to form
+ * the binary representation of the number.
  */
 void print_binary(unsigned long int n)
 {
-	unsigned long int mask = 1;
-	int len = 0;
-
-	while ((n >> len) > 0)
-		len++;
-
-	while (len--)
+	if (n > 1)
 	{
-		_putchar((n & (mask << len)) ? '1' : '0');
+		print_binary(n >> 1);
 	}
+
+	_putchar((n & 1) + '0');
 }
+
